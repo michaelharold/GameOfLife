@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Daily Missions | The System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+      color: #e0f7ff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: rgba(0, 0, 32, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      color: #e0f7ff;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      bottom: 0;
+      width: 220px;
+      background: rgba(0, 0, 32, 0.7);
+      padding-top: 20px;
+      color: #e0f7ff;
+    }
+
+    .main-panel {
+      margin-left: 220px;
+      margin-top: 60px;
+      padding: 20px;
+    }
+
+    .nav-btn {
+      color: #00eaff;
+      text-decoration: none;
+      display: block;
+      padding: 10px;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .quests-wrapper {
+      background: rgba(0, 0, 32, 0.35);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 16px #00eaff33;
+    }
+
+    .head {
+      color: #00eaff;
+    }
+
+    li {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body class="dark-body">
+  <header class="topbar"><h1 class="system-title">🌀 The System</h1></header>
+  <aside class="sidebar">
+    <a href="dashboard.html" class="nav-btn">🏠 Dashboard</a>
+    <a href="quest.html" class="nav-btn">📜 Quests</a>
+    <a href="leaderboard.html" class="nav-btn">🏆 Leaderboard</a>
+    <a href="streak.html" class="nav-btn">🔥 Streak</a>
+  </aside>
+  <main class="main-panel">
+    <section class="quests-wrapper">
+      <a href="tourmap.html" style="display: block; background: #00eaff22; border: 2px solid #00eaff; padding: 40px; text-align: center; color: #e0f7ff; font-size: 1.5rem; border-radius: 12px; text-decoration: none; box-shadow: 0 0 12px #00eaff33;">
+        Day: 1 <br>
+        🚀 Let's Progress
+      </a>
+    </section>
+  </main>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+  <script>
+    // Assuming firebase and auth are already initialized elsewhere
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        const userId = user.uid;
+        const firestore = firebase.firestore();
+        firestore.collection("students").doc(userId).get().then(doc => {
+          const studentData = doc.data();
+          if (studentData && studentData.username) {
+            document.getElementById('username').textContent = studentData.username;
+          } else {
+            document.getElementById('username').textContent = "Unknown";
+          }
+        });
+      }
+    });
+
+    // Example aiGeneratedQuests array and loop (assuming this exists in tourmap.html)
+    // aiGeneratedQuests.forEach(quest => {
+    //   // some logic here
+    // });
+
+    firebase.initializeApp({
+      apiKey: "AIzaSyB6Em8uDp3p_8W1Nf1kMhUH0GTXkInmR2c",
+      authDomain: "game-of-life-d0cf4.firebaseapp.com",
+      databaseURL: "https://game-of-life-d0cf4-default-rtdb.firebaseio.com",
+      projectId: "game-of-life-d0cf4",
+      storageBucket: "game-of-life-d0cf4.appspot.com",
+      messagingSenderId: "393447467234",
+      appId: "1:393447467234:web:9eafe313c78b8610c856bb"
+    });
+
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    auth.onAuthStateChanged(user => {
+      if (!user) return;
+      const uid = user.uid;
+      const studentRef = db.collection("students").doc(uid);
+
+      document.querySelectorAll('.submit-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          studentRef.get().then(doc => {
+            if (!doc.exists) return;
+            const data = doc.data();
+            let xp = data.xp || 0;
+            let level = data.level || 0;
+
+            xp += 20;
+
+            if (xp >= (level + 1) * 100) {
+              level++;
+              xp = 0;
+              alert(`🎉 Level Up! You are now Level ${level}`);
+            } else {
+              alert(`Progressed! Current XP: ${xp}`);
+            }
+
+            studentRef.update({ xp, level });
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>

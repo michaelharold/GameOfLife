@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The System | Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Extra layout tweaks for login */
+    .login-container {
+      max-width: 400px;
+      width: 90vw;
+      margin: 10vh auto 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      background: rgba(0, 0, 32, 0.35);
+      padding: 40px 28px;
+      border-radius: 20px;
+      backdrop-filter: blur(18px) saturate(160%);
+      box-shadow: 0 0 32px 0 #00eaff33, 0 6px 24px 0 #000a;
+    }
+    .login-logo {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 16px #00eaffcc);
+    }
+    .login-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .login-form .input {
+      width: 100%;
+    }
+    .login-form .input:hover {
+      box-shadow: 0 0 12px #00eaff88;
+    }
+    .login-footer {
+      margin-top: 16px;
+      font-size: 1rem;
+      color: #e0f7ffcc;
+      text-align: center;
+    }
+    .login-footer a {
+      color: #00eaff;
+      font-weight: bold;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .login-footer a:hover {
+      color: #00ffd0;
+      text-shadow: 0 0 6px #00ffd0aa;
+    }
+    @media (max-width: 500px) {
+      .login-container {
+        max-width: 95vw;
+        padding: 20px 5vw;
+      }
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="login-container glass" role="main" aria-label="Login form">
+    <div class="login-logo" aria-hidden="true">🌀</div>
+    <h1 class="system-title">The System</h1>
+    <form class="login-form" onsubmit="login(); return false;" autocomplete="on">
+      <input type="email" placeholder="Email" class="input" id="login-user" aria-label="Email" autocomplete="email" required>
+      <input type="password" placeholder="Password" class="input" id="login-pass" aria-label="Password" autocomplete="current-password" required>
+      <button type="submit" class="glow-btn">Login</button>
+    </form>
+    <div class="login-footer">
+      New hunter? <a href="register.html">Register</a>
+    </div>
+  </div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

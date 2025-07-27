@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quests | The System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body.dark-body {
+      background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+      color: #e0f7ff;
+      font-family: 'Orbitron', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .glass {
+      background: rgba(0, 0, 32, 0.35);
+      box-shadow: 0 0 16px #00eaff33;
+      border-radius: 12px;
+      padding: 20px;
+      color: #e0f7ff;
+    }
+
+    .input, select {
+      background: rgba(255, 255, 255, 0.07);
+      color: #e0f7ff;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      margin: 10px 0;
+      width: 100%;
+    }
+
+    .input:focus, select:focus {
+      outline: none;
+      box-shadow: 0 0 8px #00eaff99;
+    }
+
+    .glow-btn {
+      background-color: #00eaff;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    .glow-btn:hover {
+      background-color: #00c6d6;
+    }
+
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: rgba(0, 0, 32, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      color: #e0f7ff;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      bottom: 0;
+      width: 220px;
+      background: rgba(0, 0, 32, 0.7);
+      padding-top: 20px;
+      color: #e0f7ff;
+    }
+
+    .main-panel {
+      margin-left: 220px;
+      margin-top: 60px;
+      padding: 20px;
+    }
+
+    .nav-btn {
+      color: #00eaff;
+      text-decoration: none;
+      display: block;
+      padding: 10px;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  </style>
+</head>
+<body class="dark-body">
+  <header class="topbar"><h1 class="system-title">🌀 The System</h1></header>
+  <aside class="sidebar">
+    <a href="dashboard.html" class="nav-btn">🏠 Dashboard</a>
+    <a href="mission.html" class="nav-btn">📆 Daily Missions</a>
+    <a href="leaderboard.html" class="nav-btn">🏆 Leaderboard</a>
+    <a href="streak.html" class="nav-btn">🔥 Streak</a>
+  </aside>
+  <main class="main-panel">
+    <div id="firstTimeForm" style="display: none;">
+      <form id="userForm" class="glass">
+        <label for="category">Select Category:</label>
+        <select id="category" class="input" required>
+          <option value="">-- Choose Category --</option>
+          <option value="fitness">Fitness</option>
+          <option value="coding">Coding</option>
+        </select>
+
+        <label for="fitnessLevel" style="display: none;">Fitness Level:</label>
+        <select id="fitnessLevel" class="input" style="display: none;">
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="advanced">Advanced</option>
+        </select>
+
+        <label for="codingLang" style="display: none;">Coding Language:</label>
+        <select id="codingLang" class="input" style="display: none;">
+          <option value="python">Python</option>
+          <option value="javascript">JavaScript</option>
+        </select>
+
+        <label for="codingLevel" style="display: none;">Coding Level:</label>
+        <select id="codingLevel" class="input" style="display: none;">
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="advanced">Advanced</option>
+        </select>
+
+        <button class="glow-btn" type="submit">Get Quests</button>
+      </form>
+    </div>
+
+    <div id="returningUser" class="glass" style="display: none;">
+      <h2>Welcome Back!</h2>
+      <p><strong>Category:</strong> <span id="storedCategory"></span></p>
+      <p id="detailsLine"></p>
+      <a href="mission.html" class="glow-btn">Go to Missions 🚀</a>
+    </div>
+
+    <div id="questsDisplay" class="quests-wrapper">
+      <form id="questAnswersForm" class="glass" style="margin-top: 20px;"></form>
+      <div id="resultBox" class="glass" style="display: none; margin-top: 20px;"></div>
+    </div>
+  </main>
+  <script>
+    const predefinedQuests = {
+      fitness: {
+        beginner: [
+          "Do 10 pushups every morning",
+          "Take a 15-minute walk daily",
+          "Drink 2L of water a day",
+          "Stretch for 5 minutes after waking up",
+          "Log your meals for a week"
+        ],
+        intermediate: [
+          "Run 3km three times this week",
+          "Do a 30-minute home workout",
+          "Try a new healthy recipe",
+          "Track your macros for 3 days",
+          "Do 3 sets of 15 squats daily"
+        ]
+      },
+      coding: {
+        python: {
+          beginner: [
+            "Print 'Hello World' in Python",
+            "Create a calculator using input()",
+            "Use loops to print numbers 1 to 10",
+            "Learn about lists and dictionaries",
+            "Write a function to check for prime numbers"
+          ],
+          intermediate: [
+            "Build a simple to-do app with file storage",
+            "Use OOP to model a Bank Account",
+            "Write a basic web scraper using requests",
+            "Explore basic error handling with try/except",
+            "Use list comprehensions to filter data"
+          ]
+        },
+        javascript: {
+          beginner: [
+            "Alert 'Hello World' in JS",
+            "Create a button that changes text",
+            "Use console.log to debug",
+            "Learn about arrays and objects",
+            "Make a simple number guessing game"
+          ],
+          intermediate: [
+            "Create a to-do list using DOM manipulation",
+            "Use fetch() to load API data",
+            "Write a clock that updates every second",
+            "Use localStorage to save user data",
+            "Explore JS classes and objects"
+          ]
+        }
+      }
+    };
+
+    document.getElementById('category').addEventListener('change', function() {
+      document.getElementById('fitnessLevel').style.display = this.value === 'fitness' ? 'block' : 'none';
+      document.getElementById('codingLang').style.display = this.value === 'coding' ? 'block' : 'none';
+      document.getElementById('codingLevel').style.display = this.value === 'coding' ? 'block' : 'none';
+    });
+  </script>
+  <script>
+    window.onload = function() {
+      const stored = JSON.parse(localStorage.getItem('userSelections'));
+      if (stored) {
+        document.getElementById('firstTimeForm').style.display = 'none';
+        document.getElementById('returningUser').style.display = 'block';
+        document.getElementById('storedCategory').innerText = stored.category;
+
+        if (stored.category === 'fitness') {
+          document.getElementById('detailsLine').innerText = `Level: ${stored.fitnessLevel}`;
+        } else if (stored.category === 'coding') {
+          document.getElementById('detailsLine').innerText = `Language: ${stored.codingLang}, Level: ${stored.codingLevel}`;
+        }
+      } else {
+        document.getElementById('firstTimeForm').style.display = 'block';
+        document.getElementById('returningUser').style.display = 'none';
+      }
+    };
+
+    document.getElementById('userForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const category = document.getElementById('category').value;
+      const fitnessLevel = document.getElementById('fitnessLevel').value;
+      const codingLang = document.getElementById('codingLang').value;
+      const codingLevel = document.getElementById('codingLevel').value;
+
+      const userSelections = {
+        category,
+        ...(category === 'fitness' && { fitnessLevel }),
+        ...(category === 'coding' && { codingLang, codingLevel })
+      };
+
+      localStorage.setItem('userSelections', JSON.stringify(userSelections));
+
+      let quests = [];
+      if (category === 'fitness') {
+        quests = predefinedQuests.fitness[fitnessLevel] || [];
+      } else if (category === 'coding') {
+        quests = predefinedQuests.coding[codingLang]?.[codingLevel] || [];
+      }
+
+      if (quests.length === 0) {
+        alert("No quests available for the selected combination.");
+        return;
+      }
+
+      localStorage.setItem('generatedQuests', JSON.stringify(quests));
+      window.location.href = 'tourmap.html';
+    });
+  </script>
+</body>
+<script>
+  const questContainer = document.getElementById('questAnswersForm');
+  const resultBox = document.getElementById('resultBox');
+  const savedQuests = JSON.parse(localStorage.getItem('generatedQuests') || '[]');
+
+  if (savedQuests.length) {
+    savedQuests.forEach((quest, index) => {
+      const qDiv = document.createElement('div');
+      qDiv.innerHTML = `
+        <label style="margin-top: 10px;">${index + 1}. ${quest}</label>
+        <input type="text" class="input" id="answer-${index}" placeholder="Your answer" />
+      `;
+      questContainer.appendChild(qDiv);
+    });
+
+    const submitBtn = document.createElement('button');
+    submitBtn.textContent = "Submit Answers";
+    submitBtn.className = "glow-btn";
+    submitBtn.style.marginTop = "20px";
+    submitBtn.type = "button";
+    submitBtn.onclick = function () {
+      const correctAnswers = [
+        "hello world",
+        "create a calculator using input()",
+        "use loops to print numbers 1 to 10",
+        "learn about lists and dictionaries",
+        "write a function to check for prime numbers"
+      ];
+
+      let score = 0;
+      let feedbackHTML = "<h3>Results:</h3><ul>";
+
+      for (let i = 0; i < savedQuests.length; i++) {
+        const userAnswer = document.getElementById(`answer-${i}`).value.trim().toLowerCase();
+        const correct = correctAnswers[i] ? correctAnswers[i].toLowerCase() : "";
+        const isCorrect = userAnswer.includes(correct.split(" ")[0]); // Loose check
+
+        if (isCorrect) score++;
+
+        feedbackHTML += `<li>
+          <strong>Q${i + 1}:</strong> ${savedQuests[i]}<br>
+          <strong>Your Answer:</strong> ${userAnswer || "Not answered"}<br>
+          <strong>Correct Answer:</strong> ${correct}<br>
+          <strong>Status:</strong> ${isCorrect ? "✅ Correct" : "❌ Incorrect"}
+        </li><br>`;
+      }
+
+      feedbackHTML += `</ul><h3>You scored ${score} out of ${savedQuests.length}</h3>`;
+
+      // Save score in localStorage
+      const previousScores = JSON.parse(localStorage.getItem("questScores") || "[]");
+      previousScores.push({ date: new Date().toISOString(), score, total: savedQuests.length });
+      localStorage.setItem("questScores", JSON.stringify(previousScores));
+
+      // Append previous scores
+      feedbackHTML += "<h4>Previous Scores:</h4><ul>";
+      previousScores.slice(-5).reverse().forEach(entry => {
+        const date = new Date(entry.date).toLocaleString();
+        feedbackHTML += `<li>${date}: ${entry.score}/${entry.total}</li>`;
+      });
+      feedbackHTML += "</ul>";
+
+      resultBox.style.display = 'block';
+      resultBox.innerHTML = feedbackHTML;
+    };
+
+    questContainer.appendChild(submitBtn);
+  }
+</script>
+</body>
+</html>

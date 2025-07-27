@@ -1,0 +1,476 @@
+/* === Dashboard-specific styles moved from dashboard.html === */
+
+/* Styles for sidebar or navigation buttons */
+.nav-btn {
+  display: block; /* Makes the element a block-level element */
+  background: none; /* Removes default background */
+  border: none; /* Removes default border */
+  color: #00eaff; /* Sets text color to neon blue */
+  padding: 12px 8px; /* Adds spacing inside the button */
+  text-align: left; /* Aligns text to the left */
+  cursor: pointer; /* Shows pointer cursor on hover */
+  font-size: 1rem; /* Sets font size */
+  border-radius: 8px; /* Rounds the corners */
+  margin-bottom: 6px; /* Adds space below each button */
+  transition: background 0.2s, color 0.2s; /* Smooth transition for hover/focus */
+  text-decoration: none; /* Removes underline on links */
+}
+
+/* Hover and focus styles for navigation buttons */
+.nav-btn:hover,
+.nav-btn:focus {
+  background: rgba(0, 255, 255, 0.12); /* Adds a translucent cyan background */
+  color: #fff; /* Changes text color to white */
+}
+
+/* Dark mode body styling with neon glow and font settings */
+body.dark {
+  background: linear-gradient(135deg, #0a0a0a 60%, #001f2f 100%); /* Gradient dark background */
+  color: #e0f7ff; /* Sets default text color */
+  font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif; /* Sets font family */
+  min-height: 100vh; /* Ensures body is at least full viewport height */
+  margin: 0; /* Removes default margin */
+  transition: background 0.5s; /* Smooth transition for background changes */
+}
+
+/* Styling for system title text */
+.system-title {
+  color: #00eaff; /* Neon blue text color */
+  text-shadow:
+    0 0 8px #00eaffcc,
+    0 0 24px #00ffd0aa,
+    0 0 48px #00eaff55; /* Multi-layer neon glow */
+  margin-bottom: 28px; /* More space below the title */
+  font-size: 1.5rem; /* Smaller font size */
+  max-width: 30%; /* Reduce width to 1/2rd of container */
+  letter-spacing: 3px; /* Increased spacing between letters */
+  font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif; /* Futuristic font */
+  font-weight: 700; /* Bolder text */
+  text-transform: uppercase; /* All caps for impact */
+  animation: neon-flicker 2.2s infinite alternate; /* Flicker animation */
+  margin-left: 230px; /* Prevent overlap with sidebar */
+}
+
+@keyframes neon-flicker {
+  0%, 100% {
+    opacity: 1;
+    text-shadow:
+      0 0 8px #00eaffcc,
+      0 0 24px #00ffd0aa,
+      0 0 48px #00eaff55;
+  }
+  92% {
+    opacity: 0.85;
+    text-shadow:
+      0 0 4px #00eaff99,
+      0 0 16px #00ffd088,
+      0 0 32px #00eaff33;
+  }
+  95% {
+    opacity: 0.6;
+    text-shadow:
+      0 0 2px #00eaff66,
+      0 0 8px #00ffd044,
+      0 0 16px #00eaff22;
+  }
+}
+
+/* Glassmorphism container styling */
+.glass {
+  background: rgba(0, 0, 32, 0.35); /* Semi-transparent dark background */
+  padding: 36px 32px; /* Adds padding inside the container */
+  border-radius: 24px; /* Rounds the corners */
+  backdrop-filter: blur(14px) saturate(140%); /* Applies blur and color saturation */
+  box-shadow: 0 0 32px 0 #00eaff33, 0 4px 32px 0 #000a; /* Neon and soft shadow */
+  text-align: center; /* Centers text horizontally */
+  border: 1.5px solid #00eaff33; /* Subtle neon border */
+  margin-bottom: 24px; /* Space below the container */
+  transition: box-shadow 0.3s, border 0.3s; /* Smooth transitions for effects */
+}
+
+/* Input field styling with subtle glow */
+.input {
+  padding: 12px; /* Adds space inside the input */
+  margin: 14px 0; /* Vertical spacing around input */
+  width: 220px; /* Sets input width */
+  border-radius: 12px; /* Rounds the input corners */
+  border: none; /* Removes border */
+  background: rgba(255,255,255,0.07); /* Semi-transparent white background */
+  color: #e0f7ff; /* Neon blue text color */
+  text-align: center; /* Centers text inside input */
+  font-size: 1rem; /* Sets font size */
+  outline: none; /* Removes default outline */
+  box-shadow: 0 0 8px #00eaff33; /* Subtle neon glow */
+  transition: box-shadow 0.2s; /* Smooth transition for focus */
+}
+/* Input focus glow effect */
+.input:focus {
+  box-shadow: 0 0 16px #00eaff99; /* Brighter glow on focus */
+}
+
+/* Neon glow styled buttons */
+.glow-btn {
+  padding: 12px 28px; /* Adds vertical and horizontal padding */
+  border: none; /* Removes border */
+  border-radius: 12px; /* Rounds the button corners */
+  background: linear-gradient(90deg, #00eaff 60%, #00ffd0 100%); /* Neon gradient background */
+  box-shadow: 0 0 16px #00eaff99, 0 2px 8px #000a; /* Neon and soft shadow */
+  color: #0a0a0a; /* Dark text for contrast */
+  font-weight: bold; /* Bold text */
+  font-size: 1.1rem; /* Slightly larger font size */
+  cursor: pointer; /* Shows pointer on hover */
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s; /* Smooth transitions */
+  margin-top: 10px; /* Space above button */
+}
+/* Hover and focus effects for glow buttons */
+.glow-btn:hover, .glow-btn:focus {
+  background: linear-gradient(90deg, #00ffd0 60%, #00eaff 100%); /* Reversed neon gradient */
+  color: #111; /* Slightly lighter text on hover */
+  box-shadow: 0 0 32px #00eaffcc; /* Stronger neon glow */
+}
+
+/* Sidebar container styling */
+.sidebar {
+  position: fixed; /* Fixes sidebar to the viewport */
+  left: 0; /* Aligns to left edge */
+  top: 60px; /* Positions below the topbar (60px height) */
+  width: 210px; /* Sidebar width */
+  height: calc(100vh - 60px); /* Fills height minus topbar */
+  display: flex; /* Uses flexbox layout */
+  flex-direction: column; /* Stacks children vertically */
+  padding: 24px 16px; /* Adds padding inside sidebar */
+  border-top-right-radius: 18px; /* Rounds top-right corner */
+  box-shadow: 2px 0 24px #00eaff22; /* Neon shadow on right side */
+}
+
+/* Sidebar buttons styling */
+.sidebar button {
+  background: none; /* Removes default background */
+  border: none; /* Removes border */
+  color: #00eaff; /* Neon blue text */
+  padding: 12px 8px; /* Adds padding */
+  text-align: left; /* Aligns text left */
+  cursor: pointer; /* Pointer cursor */
+  font-size: 1rem; /* Sets font size */
+  border-radius: 8px; /* Rounds corners */
+  margin-bottom: 6px; /* Space below each button */
+  transition: background 0.2s, color 0.2s; /* Smooth hover/focus transitions */
+}
+/* Sidebar buttons hover and focus effects */
+.sidebar button:hover, .sidebar button:focus {
+  background: rgba(0,255,255,0.12); /* Cyan translucent background on hover */
+  color: #fff; /* White text on hover/focus */
+}
+
+/* Topbar styling for header/navigation */
+.topbar {
+  background: #111b; /* Semi-transparent dark background */
+  color: #00eaff; /* Neon blue text */
+  padding: 14px 28px; /* Adds padding */
+  width: 100%; /* Full width */
+  display: flex; /* Flexbox layout */
+  justify-content: space-between; /* Space between items */
+  align-items: center; /* Vertically center items */
+  box-shadow: 0 0 16px #00eaff33; /* Neon shadow */
+  position: fixed; /* Sticks to top */
+  top: 0; /* Top of the page */
+  left: 0; /* Left edge */
+  z-index: 10; /* Stays above other elements */
+}
+
+/* Main content panel styling */
+.main-panel {
+  min-height: 60vh; /* Minimum height of 60% viewport */
+  background: none; /* No background */
+  display: flex; /* Flexbox layout */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  font-size: 1.3rem; /* Large font size */
+  color: #00eaff; /* Neon blue text */
+  text-align: center; /* Center text */
+  padding: 10px; /* Padding around content */
+  margin-left: 230px; /* Space for sidebar */
+  padding: 32px 24px; /* Extra padding */
+  width: calc(100% - 260px); /* Full width minus sidebar */
+  margin-top: 70px; /* Space for topbar */
+}
+
+/* Empty main-panel block for future styles */
+.main-panel {
+  /* Reserved for additional main-panel styles */
+}
+
+/* Panel container default hidden */
+.panel {
+  display: none; /* Hide panel by default */
+}
+/* Active panel with fade-in animation */
+.panel.active {
+  display: block; /* Show active panel */
+  animation: fadeIn 0.5s; /* Fade in animation */
+}
+
+/* Fade-in animation keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px);} /* Start transparent and moved down */
+  to { opacity: 1; transform: translateY(0);} /* End fully visible and in place */
+}
+
+/* Experience bar container styling */
+.xp-bar {
+  background: #222c; /* Semi-transparent dark background */
+  border-radius: 12px; /* Rounds bar corners */
+  height: 50px; /* Bar height */
+  width: 320px; /* Bar width */
+  margin-top: 14px; /* Space above bar */
+  overflow: hidden; /* Hides overflow for fill */
+  box-shadow: 0 0 8px #00eaff33; /* Neon shadow */
+  border: 1px solid #00eaff33; /* Subtle neon border */
+}
+/* Experience bar fill gradient and transition */
+.xp-fill {
+  background: linear-gradient(90deg, #00eaff 60%, #00ffd0 100%); /* Neon gradient fill */
+  height: 100%; /* Fill full height of bar */
+  transition: width 0.5s; /* Smooth width transition for XP changes */
+}
+
+/* Dropdown container positioning */
+.dropdown {
+  position: relative; /* Needed for absolute positioning of menu */
+  display: inline-block; /* Allows dropdown to fit inline */
+}
+/* Dropdown menu styling */
+.dropdown-content {
+  display: none; /* Hidden by default */
+  position: absolute; /* Positioned absolutely within .dropdown */
+  right: 0; /* Aligns to the right */
+  background-color: #111b; /* Semi-transparent dark background */
+  min-width: 170px; /* Minimum width */
+  box-shadow: 0 0 14px #00eaff33; /* Neon shadow */
+  z-index: 20; /* Above other elements */
+  border-radius: 12px; /* Rounds corners */
+  overflow: hidden; /* Hides overflow */
+}
+/* Dropdown links styling */
+.dropdown-content a {
+  color: #00eaff; /* Neon blue text */
+  padding: 14px 18px; /* Padding for clickable area */
+  text-decoration: none; /* No underline */
+  display: block; /* Full width clickable */
+  transition: background 0.2s, color 0.2s; /* Smooth hover transitions */
+}
+/* Dropdown links hover effect */
+.dropdown-content a:hover {
+  background: rgba(0,255,255,0.08); /* Cyan background on hover */
+  color: #fff; /* White text on hover */
+}
+/* Show dropdown on button hover or dropdown hover */
+.dropdown-btn:hover + .dropdown-content,
+.dropdown-content:hover {
+  display: block; /* Show dropdown menu */
+}
+
+/* Responsive layout adjustments for screens below 900px */
+@media (max-width: 900px) {
+  .sidebar {
+    position: static; /* Sidebar becomes static */
+    width: 100%; /* Full width */
+    flex-direction: row; /* Row layout */
+    justify-content: space-around; /* Even spacing */
+    height: auto; /* Height adjusts to content */
+    border-radius: 0 0 18px 18px; /* Rounds bottom corners */
+    box-shadow: none; /* Removes shadow */
+    padding: 12px 0; /* Less padding */
+  }
+  .main-panel {
+    margin-left: 0; /* No sidebar offset */
+    width: 100%; /* Full width */
+    padding: 18px 6vw; /* Responsive horizontal padding */
+  }
+}
+
+/* Responsive layout adjustments for screens below 600px */
+@media (max-width: 600px) {
+  .glass {
+    padding: 18px 8px; /* Smaller padding */
+    border-radius: 14px; /* Less rounded corners */
+  }
+  .xp-bar {
+    width: 90vw; /* Responsive width */
+    min-width: 120px; /* Minimum width */
+    max-width: 98vw; /* Maximum width */
+  }
+  .main-panel {
+    padding: 10px 2vw; /* Smaller padding */
+    margin-top: 60px; /* Less space for topbar */
+  }
+  .system-title {
+    font-size: 1.3rem; /* Smaller title font */
+  }
+  .sidebar {
+    padding: 12px 8px; /* Less padding */
+  }
+  .sidebar button {
+    padding: 10px 6px; /* Smaller button padding */
+    font-size: 0.9rem; /* Smaller button font */
+  }
+  .topbar {
+    padding: 10px 20px; /* Less padding */
+  }
+  .glow-btn {
+    padding: 10px 24px; /* Smaller button padding */
+    font-size: 1rem; /* Smaller font size */
+  }
+}
+/* --- Quests section centering and styling --- */
+/* Wrapper for quests content, centers vertically and horizontally */
+.quests-wrapper {
+  display: flex; /* Uses flexbox */
+  flex-direction: column; /* Stacks children vertically */
+  align-items: center; /* Centers horizontally */
+  justify-content: center; /* Centers vertically */
+  min-height: 100vh; /* Full viewport height */
+  text-align: center; /* Centers text */
+}
+
+/* Heading style for quests */
+.head{
+  color: #00eaff; /* Neon blue text */
+  text-shadow: 0 0 8px #00eaff88; /* Neon glow */
+  font-size: 2.5rem; /* Large font */
+  margin-bottom: 24px; /* Space below heading */
+}
+
+/* Unordered list styling within quests */
+#quests ul {
+  list-style-type: none; /* No bullet points */
+  padding: 0; /* Removes default padding */
+  margin-top: 16px; /* Space above list */
+}
+
+#quests li {
+  background: rgba(0, 0, 32, 0.35);
+  padding: 16px 30px;
+  margin: 20px auto;
+  border-radius: 12px;
+  box-shadow: 0 0 16px #00eaff33;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  color: #e0f7ff;
+  font-size: 1.1rem;
+  font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;
+}
+
+textarea.answer-input {
+  background: rgba(255,255,255,0.07);
+  color: #e0f7ff;
+  border: none;
+  outline: none;
+  box-shadow: 0 0 8px #00eaff33;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 1rem;
+  width: 100%;
+  margin-top: 10px;
+}
+
+textarea.answer-input:focus {
+  box-shadow: 0 0 16px #00eaff99;
+}
+
+
+/* --- Leaderboard Styling --- */
+/* Leaderboard container centered vertically and horizontally */
+#leaderboard {
+  display: flex; /* Uses flexbox */
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+  min-height: 80vh; /* Minimum height */
+  text-align: center; /* Center text */
+}
+
+/* Leaderboard heading style */
+#leaderboard h2 {
+  color: #00eaff; /* Neon blue text */
+  text-shadow: 0 0 8px #00eaff88; /* Neon glow */
+  font-size: 2.5rem; /* Large font */
+  margin-bottom: 24px; /* Space below heading */
+}
+
+/* Ordered list styling for leaderboard */
+#leaderboard ol {
+  list-style: none; /* No numbers */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+/* Individual leaderboard list item styling */
+#leaderboard li {
+  background: rgba(255, 255, 255, 0.05); /* Slightly visible background */
+  padding: 12px 30px; /* Padding inside item */
+  margin: 18px auto; /* Vertical margin, centered */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 0 8px #00eaff33; /* Neon shadow */
+  width: fit-content; /* Shrinks to fit content */
+  color: #e0f7ff; /* Neon blue text */
+  font-weight: bold; /* Bold text */
+}
+
+/* --- Streak Styling --- */
+/* Streak container centered vertically and horizontally */
+#streak {
+  display: flex; /* Uses flexbox */
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+  min-height: 80vh; /* Minimum height */
+  text-align: center; /* Center text */
+}
+
+/* Streak heading style */
+#streak h2 {
+  color: #00eaff; /* Neon blue text */
+  text-shadow: 0 0 8px #00eaff88; /* Neon glow */
+  font-size: 2.5rem; /* Large font */
+  margin-bottom: 24px; /* Space below heading */
+}
+
+/* Streak paragraph text styling */
+#streak p {
+  font-size: 1.2rem; /* Larger paragraph text */
+  margin: 14px 0; /* Vertical margin */
+}
+
+/* XP bar margin adjustment within streak section */
+#streak .xp-bar {
+  margin: 20px 0; /* Vertical margin for XP bar */
+}
+
+
+/* === Responsive adjustments: Grouped Media Queries at Bottom === */
+
+/* Responsive layout adjustments for screens below 900px */
+@media (max-width: 900px) {
+  .sidebar {
+    flex-direction: row; /* Changes sidebar to row layout */
+    justify-content: space-around; /* Evenly spaces buttons */
+    align-items: center; /* Center items vertically */
+  }
+
+  .main-panel {
+    margin-left: 0; /* Removes sidebar offset */
+  }
+}
+
+/* Responsive layout adjustments for screens below 600px */
+@media (max-width: 600px) {
+  .system-title {
+    font-size: 1.1rem; /* Smaller title font */
+  }
+
+  .user-menu #user-level {
+    font-size: 0.98rem; /* Smaller user level font */
+  }
+}

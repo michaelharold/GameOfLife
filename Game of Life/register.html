@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register | The System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    /* Extra layout tweaks for login */
+    .login-container {
+      max-width: 350px;
+      width: 95vw;
+      margin: 8vh auto 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+    .login-logo {
+      font-size: 2.8rem;
+      margin-bottom: 8px;
+      filter: drop-shadow(0 0 12px #00eaff88);
+    }
+    .login-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .login-form .input {
+      width: 100%;
+    }
+    .login-footer {
+      margin-top: 10px;
+      font-size: 0.98rem;
+    }
+    .login-footer a {
+      color: #00eaff;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+    .login-footer a:hover {
+      color: #00ffd0;
+    }
+    @media (max-width: 500px) {
+      .login-container {
+        max-width: 98vw;
+        padding: 10px 2vw;
+      }
+    }
+  </style>
+<body class="dark">
+  <div class="login-container glass">
+    <h1 class="system-title">🌀 Join The System</h1>
+    <input type="email" placeholder="Email" class="input" id="reg-email">
+    <input type="password" placeholder="Password" class="input" id="reg-pass">
+    <input type="password" placeholder="Confirm Password" class="input" id="reg-confirm">
+    <button onclick="register()" class="glow-btn">Register</button>
+    <p>Already a hunter? <a href="index.html">Login</a></p>
+  </div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

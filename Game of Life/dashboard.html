@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | The System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark">
+  <header class="topbar" role="banner">
+    <h1 class="system-title" aria-label="The System">🌀 The System</h1>
+    <div class="user-menu" aria-label="User menu">
+      <span id="user-level">Level 1</span>
+      <nav class="dropdown" aria-label="User actions">
+        <button class="dropdown-btn" aria-haspopup="true" aria-expanded="false" aria-label="Open user menu">☰</button>
+        <div class="dropdown-content" role="menu">
+          <a href="#" role="menuitem">Profile</a>
+          <a href="#" role="menuitem">Settings</a>
+          <a href="index.html" role="menuitem">Logout</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <aside class="sidebar" role="navigation" aria-label="Main navigation">
+    <a href="quest.html" class="nav-btn">📜 Quests</a>
+    <a href="mission.html" class="nav-btn">📆 Daily Missions</a>
+    <a href="leaderboard.html" class="nav-btn">🏆 Leaderboard</a>
+    <a href="streak.html" class="nav-btn">🔥 Streak</a>
+  </aside>
+  <main class="main-panel" role="main">
+    <p>Please select a section from the sidebar to begin.</p>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

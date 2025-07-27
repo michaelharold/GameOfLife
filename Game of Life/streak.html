@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Streak | The System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+      color: #e0f7ff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: rgba(0, 0, 32, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      color: #e0f7ff;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      bottom: 0;
+      width: 220px;
+      background: rgba(0, 0, 32, 0.7);
+      padding-top: 20px;
+      color: #e0f7ff;
+    }
+
+    .main-panel {
+      margin-left: 220px;
+      margin-top: 60px;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00eaff;
+    }
+
+    .streak-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: rgba(0, 0, 32, 0.35);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 0 16px #00eaff33;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .streak-info {
+      font-size: 1.2rem;
+      margin: 10px 0;
+      color: #e0f7ff;
+    }
+
+    .highlight {
+      color: #00eaff;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body class="dark-body">
+  <header class="topbar"><h1 class="system-title">🌀 The System</h1></header>
+  <aside class="sidebar">
+    <a href="dashboard.html" class="nav-btn">🏠 Dashboard</a>
+    <a href="mission.html" class="nav-btn">📆 Daily Missions</a>
+    <a href="leaderboard.html" class="nav-btn">🏆 Leaderboard</a>
+    <a href="streak.html" class="nav-btn">🔥 Streak</a>
+  </aside>
+  <main class="main-panel">
+    <h1>🔥 Your Streak</h1>
+    <div class="streak-container">
+      <div class="streak-info">Username: <span id="username" class="highlight">[User123]</span></div>
+      <div class="streak-info">Current Streak: <span id="currentStreak" class="highlight">3 days</span></div>
+      <div class="streak-info">Total Active Days: <span id="totalDays" class="highlight">15 days</span></div>
+    </div>
+</main>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+  <!-- Custom Streak Logic -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyB6Em8uDp3p_8W1Nf1kMhUH0GTXkInmR2c",
+      authDomain: "game-of-life-d0cf4.firebaseapp.com",
+      projectId: "game-of-life-d0cf4",
+      storageBucket: "game-of-life-d0cf4.firebasestorage.app",
+      messagingSenderId: "393447467234",
+      appId: "1:393447467234:web:9eafe313c78b8610c856bb"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        const userId = user.uid;
+
+        const today = new Date().toISOString().split('T')[0];
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+        const userRef = db.ref(`users/${userId}/streak`);
+
+        userRef.once('value').then(snapshot => {
+          const data = snapshot.val() || {};
+          const lastLogin = data.lastLoginDate || "";
+          let currentStreak = data.currentStreak || 0;
+          let totalDays = data.totalDays || 0;
+
+          if (lastLogin !== today) {
+            totalDays += 1;
+            if (lastLogin === yesterdayStr) {
+              currentStreak += 1;
+            } else {
+              currentStreak = 1;
+            }
+
+            userRef.set({
+              lastLoginDate: today,
+              currentStreak,
+              totalDays
+            });
+          }
+
+          document.getElementById('username').textContent = user.email;
+          document.getElementById('currentStreak').textContent = `${currentStreak} days`;
+          document.getElementById('totalDays').textContent = `${totalDays} days`;
+        });
+      } else {
+        console.log("User not signed in.");
+      }
+    });
+  </script>
+</body>
+</html>
