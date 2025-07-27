@@ -140,7 +140,7 @@
       <h2>Welcome Back!</h2>
       <p><strong>Category:</strong> <span id="storedCategory"></span></p>
       <p id="detailsLine"></p>
-      <a href="mission.html" class="glow-btn">Go to Missions 🚀</a>
+      <a href="streak.html" class="glow-btn">Streak 🚀</a>
     </div>
 
     <div id="questsDisplay" class="quests-wrapper">
@@ -280,49 +280,7 @@
     submitBtn.style.marginTop = "20px";
     submitBtn.type = "button";
     submitBtn.onclick = function () {
-      const correctAnswers = [
-        "hello world",
-        "create a calculator using input()",
-        "use loops to print numbers 1 to 10",
-        "learn about lists and dictionaries",
-        "write a function to check for prime numbers"
-      ];
-
-      let score = 0;
-      let feedbackHTML = "<h3>Results:</h3><ul>";
-
-      for (let i = 0; i < savedQuests.length; i++) {
-        const userAnswer = document.getElementById(`answer-${i}`).value.trim().toLowerCase();
-        const correct = correctAnswers[i] ? correctAnswers[i].toLowerCase() : "";
-        const isCorrect = userAnswer.includes(correct.split(" ")[0]); // Loose check
-
-        if (isCorrect) score++;
-
-        feedbackHTML += `<li>
-          <strong>Q${i + 1}:</strong> ${savedQuests[i]}<br>
-          <strong>Your Answer:</strong> ${userAnswer || "Not answered"}<br>
-          <strong>Correct Answer:</strong> ${correct}<br>
-          <strong>Status:</strong> ${isCorrect ? "✅ Correct" : "❌ Incorrect"}
-        </li><br>`;
-      }
-
-      feedbackHTML += `</ul><h3>You scored ${score} out of ${savedQuests.length}</h3>`;
-
-      // Save score in localStorage
-      const previousScores = JSON.parse(localStorage.getItem("questScores") || "[]");
-      previousScores.push({ date: new Date().toISOString(), score, total: savedQuests.length });
-      localStorage.setItem("questScores", JSON.stringify(previousScores));
-
-      // Append previous scores
-      feedbackHTML += "<h4>Previous Scores:</h4><ul>";
-      previousScores.slice(-5).reverse().forEach(entry => {
-        const date = new Date(entry.date).toLocaleString();
-        feedbackHTML += `<li>${date}: ${entry.score}/${entry.total}</li>`;
-      });
-      feedbackHTML += "</ul>";
-
-      resultBox.style.display = 'block';
-      resultBox.innerHTML = feedbackHTML;
+      alert("✅ Progress increased!");
     };
 
     questContainer.appendChild(submitBtn);
